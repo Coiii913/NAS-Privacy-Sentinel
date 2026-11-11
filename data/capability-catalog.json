@@ -1,0 +1,5818 @@
+{
+  "catalogVersion": "2.0.0",
+  "generatedAt": "2026-09-01",
+  "invocation": {
+    "command": "cli.invoke --cli <CLI> --action <ACTION> -- <ACTION_OPTIONS>",
+    "resultEnvelope": {
+      "success": {
+        "ok": true,
+        "data": {}
+      },
+      "failure": {
+        "ok": false,
+        "error": {}
+      }
+    }
+  },
+  "guide": {
+    "glossary": [
+      {
+        "term": "Capability domain",
+        "meaning": "NAS ，File management、Albummonitoring。"
+      },
+      {
+        "term": "CLI capability",
+        "meaning": "， ug-filesystem； CLI。"
+      },
+      {
+        "term": "Action",
+        "meaning": "CLI operation， find Findfile。"
+      },
+      {
+        "term": "Effect",
+        "meaning": "operationReaddata，、、Createdata。"
+      },
+      {
+        "term": "Approval",
+        "meaning": "operation，Requiresuserconfirmation。"
+      }
+    ],
+    "domains": [
+      {
+        "domain": "file",
+        "typicalRequests": [
+          "file、directory",
+          "OrganizeDownloaddirectory",
+          "file、tag、file"
+        ],
+        "boundaries": [
+          "、operationRequiresApproval",
+          "Findscope，file"
+        ]
+      },
+      {
+        "domain": "album",
+        "typicalRequests": [
+          "people、location、timephotos",
+          "CreateAlbum",
+          "Organizephotostime"
+        ],
+        "boundaries": [
+          "CreateAlbumconfirmationrealphotos",
+          "Cannotphotos ID、Album ID filepath"
+        ]
+      },
+      {
+        "domain": "monitor",
+        "typicalRequests": [
+          "Querymonitoringevents",
+          "confirmationvehicles",
+          "Organizeeventsevidence"
+        ],
+        "boundaries": [
+          "realeventsidentityresult",
+          "、Approval"
+        ]
+      },
+      {
+        "domain": "media",
+        "typicalRequests": [
+          "English typicalRequests text.",
+          "Play",
+          "SearchDownloadSubtitles"
+        ],
+        "boundaries": [
+          "SubtitlesDownloadMustrealSubtitlesresult",
+          "Nocontentresult"
+        ]
+      },
+      {
+        "domain": "music",
+        "typicalRequests": [
+          "、、Music",
+          "Play、、"
+        ],
+        "boundaries": [
+          "Playresultuser",
+          "SearchresultMusic"
+        ]
+      },
+      {
+        "domain": "document",
+        "typicalRequests": [
+          "ReadExtractDocumentscontent",
+          "Documents、Translate、"
+        ],
+        "boundaries": [
+          "RequiresrealDocuments，content",
+          "CannotReadDocumentscontent"
+        ]
+      },
+      {
+        "domain": "knowledge",
+        "typicalRequests": [
+          "QueryKnowledge",
+          "English typicalRequests text.",
+          "textSave"
+        ],
+        "boundaries": [
+          "Mustrealresult",
+          "Savecontent"
+        ]
+      }
+    ],
+    "scenarios": [
+      {
+        "name": "Downloaddirectory",
+        "userRequest": "Downloaddirectoryfile，confirmationfileOrganizedirectory。",
+        "steps": [
+          {
+            "cli": "ug-filesystem",
+            "action": "ls",
+            "purpose": "ReadDownloaddirectoryrealfile"
+          },
+          {
+            "cli": "ug-filemgr",
+            "action": "scan-dedupe",
+            "purpose": "file"
+          },
+          {
+            "cli": "file-workflow",
+            "action": "batch-move",
+            "purpose": "userconfirmationfile"
+          }
+        ],
+        "boundary": "result；Mustconfirmation，Cannotfile。"
+      },
+      {
+        "name": "photosAlbum",
+        "userRequest": "photos，Album",
+        "steps": [
+          {
+            "cli": "ug-photo",
+            "action": "search-picture",
+            "purpose": "time、location、peopleFindphotos"
+          },
+          {
+            "cli": "ug-photo",
+            "action": "create-album",
+            "purpose": "userconfirmationrealphotosCreateAlbum"
+          }
+        ],
+        "boundary": "SearchCreate；Do notphotosphotosAlbum。"
+      },
+      {
+        "name": "anomaly",
+        "userRequest": "Noanomaly？？evidenceOrganize",
+        "steps": [
+          {
+            "cli": "ug-surveillance",
+            "action": "event-timeline",
+            "purpose": "Queryrealmonitoringevents"
+          },
+          {
+            "cli": "ug-surveillance",
+            "action": "identity-resolve",
+            "purpose": "eventspeoplevehiclesidentity"
+          },
+          {
+            "cli": "ug-surveillance",
+            "action": "event-evidence",
+            "purpose": "eventsevidence"
+          }
+        ],
+        "boundary": "identityMustunknown；Do notevents。"
+      },
+      {
+        "name": "Subtitles",
+        "userRequest": "，NoSubtitles。",
+        "steps": [
+          {
+            "cli": "ug-video",
+            "action": "search",
+            "purpose": "timerealMediaresult"
+          },
+          {
+            "cli": "ug-video",
+            "action": "subtitle-search",
+            "purpose": "userSearchSubtitles"
+          }
+        ],
+        "boundary": "RequiresDownloadSubtitles，realSubtitles file-id  subtitle-download；CannotSearch ID。"
+      },
+      {
+        "name": "SearchMusic",
+        "userRequest": "Play， 30%。",
+        "steps": [
+          {
+            "cli": "ug-music",
+            "action": "search",
+            "purpose": "SearchPlayMusic"
+          },
+          {
+            "cli": "ug-music",
+            "action": "control",
+            "purpose": "Playuser"
+          }
+        ],
+        "boundary": "SearchPlay；resultPlayreal。"
+      },
+      {
+        "name": "contractinvoice",
+        "userRequest": "contractinvoice，projecttagOrganizedirectory。",
+        "steps": [
+          {
+            "cli": "ug-filesystem",
+            "action": "find",
+            "purpose": "Findfilefile"
+          },
+          {
+            "cli": "ug-document",
+            "action": "extract",
+            "purpose": "realDocumentsExtractproject"
+          },
+          {
+            "cli": "ug-filemgr",
+            "action": "tag-add-file",
+            "purpose": "userconfirmationfileprojecttag"
+          },
+          {
+            "cli": "ug-filesystem",
+            "action": "mkdir",
+            "purpose": "Createdirectory"
+          },
+          {
+            "cli": "ug-filesystem",
+            "action": "cpmv",
+            "purpose": "confirmationfiledirectory"
+          }
+        ],
+        "boundary": "DocumentscontentExtractfailureproject；Mustconfirmationscope。"
+      },
+      {
+        "name": "meeting",
+        "userRequest": "meetingtext，Savemeeting。",
+        "steps": [
+          {
+            "cli": "ug-knowledge",
+            "action": "audio-transcription",
+            "purpose": "realtext"
+          },
+          {
+            "cli": "ug-knowledge",
+            "action": "save-text",
+            "purpose": "userconfirmationcontentSave"
+          }
+        ],
+        "boundary": "failurecontent，Do notcontent；Saveconfirmation。"
+      }
+    ]
+  },
+  "domains": [
+    {
+      "id": "music",
+      "name": "Music",
+      "description": "MusicPlay。"
+    },
+    {
+      "id": "media",
+      "name": "Media",
+      "description": "Mediacontent、PlaySubtitles。"
+    },
+    {
+      "id": "monitor",
+      "name": "Monitoring center",
+      "description": "Query、monitoringevents、identityevidence。"
+    },
+    {
+      "id": "file",
+      "name": "File management",
+      "description": "、、fileOrganize。"
+    },
+    {
+      "id": "document",
+      "name": "Documents",
+      "description": "Read、、、TranslateDocuments。"
+    },
+    {
+      "id": "knowledge",
+      "name": "Knowledge",
+      "description": "Knowledge、、audioSave。"
+    },
+    {
+      "id": "album",
+      "name": "Album",
+      "description": "photosAlbumAlbumOrganize。"
+    }
+  ],
+  "clis": [
+    {
+      "name": "ug-music",
+      "domain": "music",
+      "description": "MusicMusicPlay。",
+      "agent": "media-agent",
+      "actions": [
+        {
+          "name": "search",
+          "description": "ug-music  search operation。",
+          "parameters": [
+            {
+              "name": "type",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`type*`=`query|song|singer|album|genre|year|songlist|library|collection|recent|random`",
+              "enum": [
+                "query",
+                "song",
+                "singer",
+                "album",
+                "genre",
+                "year",
+                "songlist",
+                "library",
+                "collection",
+                "recent",
+                "random"
+              ]
+            },
+            {
+              "name": "keyword",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keyword` string"
+            },
+            {
+              "name": "play",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`play` boolean"
+            },
+            {
+              "name": "singer-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`singer-name` string"
+            },
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name` string"
+            },
+            {
+              "name": "songlist-id",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`songlist-id` integer>=1",
+              "minimum": 1
+            },
+            {
+              "name": "start-year",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-year`/`end-year` integer>=0",
+              "minimum": 0
+            },
+            {
+              "name": "end-year",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-year`/`end-year` integer>=0",
+              "minimum": 0
+            },
+            {
+              "name": "page",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`page` integer>=1",
+              "minimum": 1
+            },
+            {
+              "name": "playindex",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`playindex` integer>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "mixed",
+          "approval": "none",
+          "returnSummary": "Music/// scene  `items`；PlayPlayresult",
+          "example": {
+            "command": "cli.invoke --cli ug-music --action search -- --type song --keyword \"周杰伦 稻香\" --play",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "control",
+          "description": "ug-music  control operation。",
+          "parameters": [
+            {
+              "name": "operation",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`operation*`=`pause|resume|stop|next|previous|seek|set-volume|volume-up|volume-down|set-speed|set-playback-mode|set-stop-timer`",
+              "enum": [
+                "pause",
+                "resume",
+                "stop",
+                "next",
+                "previous",
+                "seek",
+                "set-volume",
+                "volume-up",
+                "volume-down",
+                "set-speed",
+                "set-playback-mode",
+                "set-stop-timer"
+              ]
+            },
+            {
+              "name": "seek-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`seek-type`=`abs|absolute|rel|relative`",
+              "enum": [
+                "abs",
+                "absolute",
+                "rel",
+                "relative"
+              ]
+            },
+            {
+              "name": "position-ms",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`position-ms` integer"
+            },
+            {
+              "name": "volume",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`volume` 0..2",
+              "minimum": 0,
+              "maximum": 2
+            },
+            {
+              "name": "speed",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`speed` >0..2",
+              "minimum": 0,
+              "maximum": 2
+            },
+            {
+              "name": "playback-mode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`playback-mode`=`sequential|loop_single|shuffle`",
+              "enum": [
+                "sequential",
+                "loop_single",
+                "shuffle"
+              ]
+            },
+            {
+              "name": "stop-after-minutes",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`stop-after-minutes` integer>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "state-change",
+          "approval": "none",
+          "returnSummary": "/failure",
+          "example": {
+            "command": "cli.invoke --cli ug-music --action control -- --operation set-volume --volume 0.8",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    },
+    {
+      "name": "ug-video",
+      "domain": "media",
+      "description": "Media、PlaySubtitles。",
+      "agent": "media-agent",
+      "actions": [
+        {
+          "name": "search",
+          "description": "ug-video  search operation。",
+          "parameters": [
+            {
+              "name": "type",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`type*`=`query|media|collection|actor|style|library|favorites|recent|updated|region|release-date|activity|random`",
+              "enum": [
+                "query",
+                "media",
+                "collection",
+                "actor",
+                "style",
+                "library",
+                "favorites",
+                "recent",
+                "updated",
+                "region",
+                "release-date",
+                "activity",
+                "random"
+              ]
+            },
+            {
+              "name": "keyword",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keyword`"
+            },
+            {
+              "name": "play",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`play`"
+            },
+            {
+              "name": "classification",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`classification`=`all|movie|tv|other`",
+              "enum": [
+                "all",
+                "movie",
+                "tv",
+                "other"
+              ]
+            },
+            {
+              "name": "video-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`video-type`=`all|movie|tv|collection`",
+              "enum": [
+                "all",
+                "movie",
+                "tv",
+                "collection"
+              ]
+            },
+            {
+              "name": "ug-video-info-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`ug-video-info-id`"
+            },
+            {
+              "name": "collection-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`collection-id`"
+            },
+            {
+              "name": "episode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`episode`"
+            },
+            {
+              "name": "media-lib-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`media-lib-id`"
+            },
+            {
+              "name": "limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`limit` 1..100",
+              "minimum": 1,
+              "maximum": 100
+            },
+            {
+              "name": "offset",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`offset`"
+            },
+            {
+              "name": "ug-style-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`ug-style-id`"
+            },
+            {
+              "name": "ug-country-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`ug-country-id`"
+            },
+            {
+              "name": "release-start",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`release-start`/`release-end`"
+            },
+            {
+              "name": "release-end",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`release-start`/`release-end`"
+            },
+            {
+              "name": "prefer",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`prefer`=`media|collection`",
+              "enum": [
+                "media",
+                "collection"
+              ]
+            },
+            {
+              "name": "identify-status",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`identify-status`"
+            },
+            {
+              "name": "watch-status",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`watch-status`"
+            },
+            {
+              "name": "ug-video-info-ids",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`ug-video-info-ids`"
+            },
+            {
+              "name": "order-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`order-type`"
+            },
+            {
+              "name": "create-time-order",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`create-time-order`"
+            },
+            {
+              "name": "sort-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`sort-type`"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page-size`"
+            },
+            {
+              "name": "video-ids",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`video-ids`"
+            },
+            {
+              "name": "with-all",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`with-all`"
+            },
+            {
+              "name": "all-limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`all-limit`/`recently-limit`/`favorites-limit` 0..100。",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "name": "recently-limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`all-limit`/`recently-limit`/`favorites-limit` 0..100。",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "name": "favorites-limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`all-limit`/`recently-limit`/`favorites-limit` 0..100。",
+              "minimum": 0,
+              "maximum": 100
+            }
+          ],
+          "effect": "mixed",
+          "approval": "none",
+          "returnSummary": "Media、、、PlayPlayresult；PlayRequiresreal ID/path",
+          "example": {
+            "command": "cli.invoke --cli ug-video --action search -- --type media --keyword \"流浪地球\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "control",
+          "description": "ug-video  control operation。",
+          "parameters": [
+            {
+              "name": "operation",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`operation*`=`pause|continue|next|previous`。",
+              "enum": [
+                "pause",
+                "continue",
+                "next",
+                "previous"
+              ]
+            }
+          ],
+          "effect": "state-change",
+          "approval": "none",
+          "returnSummary": "English returnSummary text.",
+          "example": {
+            "command": "cli.invoke --cli ug-video --action control -- --operation pause",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "subtitle-search",
+          "description": "ug-video  subtitle-search operation。",
+          "parameters": [
+            {
+              "name": "video-path",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`video-path` string"
+            },
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query` string"
+            },
+            {
+              "name": "season-number",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`season-number` integer>=0， 0",
+              "minimum": 0,
+              "default": 0
+            },
+            {
+              "name": "episode-number",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`episode-number` integer>=0， 0。",
+              "minimum": 0,
+              "default": 0
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Subtitles、`file-id`、/",
+          "example": {
+            "command": "cli.invoke --cli ug-video --action subtitle-search -- --video-path \"/nas/video/movie.mkv\" --query \"中文字幕\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "subtitle-download",
+          "description": "ug-video  subtitle-download operation。",
+          "parameters": [
+            {
+              "name": "video-path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`video-path*` string"
+            },
+            {
+              "name": "file-id",
+              "type": "integer",
+              "required": true,
+              "repeatable": false,
+              "description": "`file-id*` integer>=1。",
+              "minimum": 1
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "`status`Downloadresult；",
+          "example": {
+            "command": "cli.invoke --cli ug-video --action subtitle-download -- --video-path \"/nas/video/movie.mkv\" --file-id 123",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    },
+    {
+      "name": "ug-surveillance",
+      "domain": "monitor",
+      "description": "Querymonitoring、events、identityevidence。",
+      "agent": "security-monitor-agent",
+      "actions": [
+        {
+          "name": "cameras",
+          "description": "ug-surveillance  cameras operation。",
+          "parameters": [
+            {
+              "name": "status",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`status` integer 0..3， 1",
+              "minimum": 0,
+              "maximum": 3,
+              "default": 1
+            },
+            {
+              "name": "include-deleted",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`include-deleted` boolean， false。",
+              "default": false
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "real `camera_id`/`device_id`、、",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action cameras -- --status 1",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "event-timeline",
+          "description": "ug-surveillance  event-timeline operation。",
+          "parameters": [
+            {
+              "name": "start-time",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`start-time*`、`end-time*`"
+            },
+            {
+              "name": "end-time",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`start-time*`、`end-time*`"
+            },
+            {
+              "name": "timezone",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`timezone`"
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`"
+            },
+            {
+              "name": "device-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`device-id`"
+            },
+            {
+              "name": "camera-id",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-id`、`location`、`floor`、`room`"
+            },
+            {
+              "name": "location",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-id`、`location`、`floor`、`room`"
+            },
+            {
+              "name": "floor",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-id`、`location`、`floor`、`room`"
+            },
+            {
+              "name": "room",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-id`、`location`、`floor`、`room`"
+            },
+            {
+              "name": "topic",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`topic`=`Human|HumanFace|Vehicle|Pet|Package`",
+              "enum": [
+                "Human",
+                "HumanFace",
+                "Vehicle",
+                "Pet",
+                "Package"
+              ]
+            },
+            {
+              "name": "identity-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`identity-type`=`all|known|stranger`",
+              "enum": [
+                "all",
+                "known",
+                "stranger"
+              ]
+            },
+            {
+              "name": "person-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`person-name`"
+            },
+            {
+              "name": "limit",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`limit` integer>=0， 10。",
+              "minimum": 0,
+              "default": 10
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "events `items`、summary、warnings、events/evidence； scene monitoringevents",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action event-timeline -- --start-time \"2026-08-10T00:00:00+08:00\" --end-time \"2026-08-10T23:59:59+08:00\" --topic Human --topic HumanFace",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "identity-resolve",
+          "description": "ug-surveillance  identity-resolve operation。",
+          "parameters": [
+            {
+              "name": "event-id",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`event-id`、`face-id`、`plate-id`"
+            },
+            {
+              "name": "face-id",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`event-id`、`face-id`、`plate-id`"
+            },
+            {
+              "name": "plate-id",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`event-id`、`face-id`、`plate-id`"
+            },
+            {
+              "name": "start-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`、`timezone`"
+            },
+            {
+              "name": "end-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`、`timezone`"
+            },
+            {
+              "name": "timezone",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`、`timezone`"
+            },
+            {
+              "name": "include-explanation",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`include-explanation` boolean， true",
+              "default": true
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`。real。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "/identity、",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action identity-resolve -- --event-id \"evt_123\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "event-evidence",
+          "description": "ug-surveillance  event-evidence operation。",
+          "parameters": [
+            {
+              "name": "event-id",
+              "type": "string",
+              "required": true,
+              "repeatable": true,
+              "description": "`event-id*`， 1"
+            },
+            {
+              "name": "evidence-type",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`evidence-type`=`snapshot|clip|playback_position`",
+              "enum": [
+                "snapshot",
+                "clip",
+                "playback_position"
+              ]
+            },
+            {
+              "name": "max-items",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-items`>=1， 5",
+              "minimum": 1,
+              "default": 5
+            },
+            {
+              "name": "ttl-sec",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`ttl-sec`>=1",
+              "minimum": 1
+            },
+            {
+              "name": "purpose",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`purpose`=`agent_answer|user_review|export_request`， `agent_answer`",
+              "enum": [
+                "agent_answer",
+                "user_review",
+                "export_request"
+              ],
+              "default": "agent_answer"
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "events、Playevidence",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action event-evidence -- --event-id \"evt_123\" --evidence-type snapshot",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "faces",
+          "description": "ug-surveillance  faces operation。",
+          "parameters": [
+            {
+              "name": "camera-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`camera-id`"
+            },
+            {
+              "name": "identity-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`identity-type`=`known|stranger|all`， `all`",
+              "enum": [
+                "known",
+                "stranger",
+                "all"
+              ],
+              "default": "all"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`>=1， 1",
+              "minimum": 1,
+              "default": 1
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page-size` 1..100， 20",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Requires `face-id`",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action faces -- --identity-type stranger",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "face-detail",
+          "description": "ug-surveillance  face-detail operation。",
+          "parameters": [
+            {
+              "name": "face-id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`face-id*`"
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "English returnSummary text.",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action face-detail -- --face-id \"face_123\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "vehicle-plates",
+          "description": "ug-surveillance  vehicle-plates operation。",
+          "parameters": [
+            {
+              "name": "camera-id",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-id`"
+            },
+            {
+              "name": "identity-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`identity-type`=`known|stranger|all`， `all`",
+              "enum": [
+                "known",
+                "stranger",
+                "all"
+              ],
+              "default": "all"
+            },
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query`"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`>=1， 1",
+              "minimum": 1,
+              "default": 1
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page-size` 1..100， 20",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Requires `plate-id`",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action vehicle-plates -- --identity-type all --query \"粤B\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "vehicle-plate-detail",
+          "description": "ug-surveillance  vehicle-plate-detail operation。",
+          "parameters": [
+            {
+              "name": "plate-id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`plate-id*`"
+            },
+            {
+              "name": "request-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`request-id`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "English returnSummary text.",
+          "example": {
+            "command": "cli.invoke --cli ug-surveillance --action vehicle-plate-detail -- --plate-id \"plate_123\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        }
+      ]
+    },
+    {
+      "name": "ug-filesystem",
+      "domain": "file",
+      "description": "Read NAS filefiledirectory。",
+      "agent": "file-agent",
+      "actions": [
+        {
+          "name": "cat",
+          "description": "ug-filesystem  cat operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "offset",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`offset` integer>=0",
+              "minimum": 0
+            },
+            {
+              "name": "length",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`length` integer>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "filecontent、/",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action cat -- --path \"current\" --offset 0 --length 4096",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "category",
+          "description": "ug-filesystem  category operation。",
+          "parameters": [
+            {
+              "name": "root-type",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`root-type` integer 1..9",
+              "minimum": 1,
+              "maximum": 9
+            },
+            {
+              "name": "limit",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`limit` integer>=0",
+              "minimum": 0
+            },
+            {
+              "name": "permission",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`permission`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "file",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action category -- --root-type 1 --limit 100",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "find",
+          "description": "ug-filesystem  find operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "pattern",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`pattern`"
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`type`=`all|dir|file|image|video|audio|archive|documents|font|application`",
+              "enum": [
+                "all",
+                "dir",
+                "file",
+                "image",
+                "video",
+                "audio",
+                "archive",
+                "documents",
+                "font",
+                "application"
+              ]
+            },
+            {
+              "name": "min-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`min-size`/`max-size`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "max-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`min-size`/`max-size`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "date-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`date-type` 0..3",
+              "minimum": 0,
+              "maximum": 3
+            },
+            {
+              "name": "start-timestamp",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-timestamp`/`end-timestamp`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "end-timestamp",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-timestamp`/`end-timestamp`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "max-depth",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-depth`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`limit`>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "file、realpath `fileId`",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action find -- --path \"/nas/docs\" --pattern \"*.pdf\" --type file --max-depth 1",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "getfattr",
+          "description": "ug-filesystem  getfattr operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "field",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`field`"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "file",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action getfattr -- --path \"/nas/a.txt\" --all true",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "ls",
+          "description": "ug-filesystem  ls operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "recursive",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`recursive` boolean"
+            },
+            {
+              "name": "max-depth",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-depth`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`limit`>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "directory、real/path `fileId`",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action ls -- --path \"/nas/docs\" --limit 100",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "md5sum",
+          "description": "ug-filesystem  md5sum operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "MD5",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action md5sum -- --path \"/nas/a.bin\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "sha256sum",
+          "description": "ug-filesystem  sha256sum operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "SHA-256",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action sha256sum -- --path \"/nas/a.bin\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "stat",
+          "description": "ug-filesystem  stat operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "realpath、、time stat",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action stat -- --path \"current\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "chtimes",
+          "description": "ug-filesystem  chtimes operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "atime",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`atime`/`mtime` integer>=0。",
+              "minimum": 0
+            },
+            {
+              "name": "mtime",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`atime`/`mtime` integer>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "timeresult",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action chtimes -- --path \"/nas/a.txt\" --mtime 1760000000",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "cpmv",
+          "description": "ug-filesystem  cpmv operation。",
+          "parameters": [
+            {
+              "name": "src",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`src*`、`dst*`"
+            },
+            {
+              "name": "dst",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`src*`、`dst*`"
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`type`=`move|copy`",
+              "enum": [
+                "move",
+                "copy"
+              ]
+            },
+            {
+              "name": "action-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`action-type`"
+            },
+            {
+              "name": "overwrite",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`overwrite` boolean。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "/real",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action cpmv -- --src \"/nas/a.txt\" --dst \"/nas/archive\" --type move",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "del",
+          "description": "ug-filesystem  del operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "/， `final_path`",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action del -- --path \"/nas/a.txt\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "echo",
+          "description": "ug-filesystem  echo operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content`"
+            },
+            {
+              "name": "write-mode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`write-mode`=`overwrite|append|patch`",
+              "enum": [
+                "overwrite",
+                "append",
+                "patch"
+              ]
+            },
+            {
+              "name": "offset",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`offset`>=0。",
+              "minimum": 0
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "fileresult",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action echo -- --path \"/nas/a.txt\" --content \"hello\" --write-mode overwrite",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "mkdir",
+          "description": "ug-filesystem  mkdir operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`mode`"
+            },
+            {
+              "name": "parents",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`parents` boolean。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "directorypath",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action mkdir -- --path \"/nas/docs/contracts\" --parents true",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "rename",
+          "description": "ug-filesystem  rename operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`、`old-name*`、`new-name*`。"
+            },
+            {
+              "name": "old-name",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`、`old-name*`、`new-name*`。"
+            },
+            {
+              "name": "new-name",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`、`old-name*`、`new-name*`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "、",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action rename -- --path \"/nas/docs\" --old-name \"a.txt\" --new-name \"b.txt\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "restore",
+          "description": "ug-filesystem  restore operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`，Mustrealpath。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "English returnSummary text.",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action restore -- --path \"/home/user/#recycle/a.txt\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "share-mkdir",
+          "description": "ug-filesystem  share-mkdir operation。",
+          "parameters": [
+            {
+              "name": "volume",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`volume*`、`folder-name*`"
+            },
+            {
+              "name": "folder-name",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`volume*`、`folder-name*`"
+            },
+            {
+              "name": "quota-bytes",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`quota-bytes`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "quota-unit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`quota-unit`"
+            },
+            {
+              "name": "network-places-hide",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`network-places-hide`"
+            },
+            {
+              "name": "no-permission-hide",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`no-permission-hide`"
+            },
+            {
+              "name": "enable-recycle",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`enable-recycle`"
+            },
+            {
+              "name": "allow-only-admin-recycle",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`allow-only-admin-recycle`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "directoryCreate",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action share-mkdir -- --volume \"volume1\" --folder-name \"team\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "touch",
+          "description": "ug-filesystem  touch operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`"
+            },
+            {
+              "name": "mode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`mode`"
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "file",
+          "example": {
+            "command": "cli.invoke --cli ug-filesystem --action touch -- --path \"/nas/new.txt\" --content \"hello\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    },
+    {
+      "name": "ug-filemgr",
+      "domain": "file",
+      "description": "Queryfiletag。",
+      "agent": "file-agent",
+      "actions": [
+        {
+          "name": "mediainfo",
+          "description": "ug-filemgr  mediainfo operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`path*`，`intranet-share-id`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "intranet-share-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`path*`，`intranet-share-id`>=0",
+              "minimum": 0
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "data",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action mediainfo -- --path \"/nas/a.mp4\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "scan-dedupe",
+          "description": "ug-filemgr  scan-dedupe operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": true,
+              "description": "`path*`， 1"
+            },
+            {
+              "name": "scope",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`scope`=`all|documents|images|videos|audio`",
+              "enum": [
+                "all",
+                "documents",
+                "images",
+                "videos",
+                "audio"
+              ]
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "English returnSummary text.",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action scan-dedupe -- --path \"/nas/photos\" --scope images",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-filter",
+          "description": "ug-filemgr  tag-filter operation。",
+          "parameters": [
+            {
+              "name": "tag-id",
+              "type": "string",
+              "required": true,
+              "repeatable": true,
+              "description": "`tag-id*`， 1"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`path`"
+            },
+            {
+              "name": "recursive",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`recursive` boolean"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "file",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-filter -- --tag-id \"1\" --path \"/nas/docs\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-get",
+          "description": "ug-filemgr  tag-get operation。",
+          "parameters": [
+            {
+              "name": "tag-id",
+              "type": "integer",
+              "required": true,
+              "repeatable": false,
+              "description": "`tag-id*` integer"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "tag",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-get -- --tag-id 1",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-get-by-name",
+          "description": "ug-filemgr  tag-get-by-name operation。",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`name*`"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "tag",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-get-by-name -- --name \"重要\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-get-file",
+          "description": "ug-filemgr  tag-get-file operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": true,
+              "description": "`path*`， 1"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "filetag",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-get-file -- --path \"/nas/a.pdf\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-list",
+          "description": "ug-filemgr  tag-list operation。",
+          "parameters": [],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "tag",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-list",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-list-file",
+          "description": "ug-filemgr  tag-list-file operation。",
+          "parameters": [
+            {
+              "name": "tag-id",
+              "type": "integer",
+              "required": true,
+              "repeatable": false,
+              "description": "`tag-id*` integer"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "tagfile",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-list-file -- --tag-id 1",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "tag-add",
+          "description": "ug-filemgr  tag-add operation。",
+          "parameters": [
+            {
+              "name": "colour",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`colour`，`tag-id*`"
+            },
+            {
+              "name": "tag-id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`colour`，`tag-id*`"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "tag-add result。",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-add -- --tag-id \"重要\" --colour \"#ff0000\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "tag-add-file",
+          "description": "ug-filemgr  tag-add-file operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": true,
+              "description": "`path*`， 1"
+            },
+            {
+              "name": "tag-id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`tag-id*`"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "conditional",
+          "returnSummary": "tag-add-file result。",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-add-file -- --path \"/nas/a.pdf\" --tag-id \"1\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "tag-delete",
+          "description": "ug-filemgr  tag-delete operation。",
+          "parameters": [
+            {
+              "name": "tag-id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`tag-id*`"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "tag-delete result。",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-delete -- --tag-id \"1\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "tag-delete-file",
+          "description": "ug-filemgr  tag-delete-file operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": true,
+              "repeatable": true,
+              "description": "`path*`， 1"
+            },
+            {
+              "name": "tag-id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`tag-id*`"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "conditional",
+          "returnSummary": "tag-delete-file result。",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-delete-file -- --path \"/nas/a.pdf\" --tag-id \"1\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "tag-set",
+          "description": "ug-filemgr  tag-set operation。",
+          "parameters": [
+            {
+              "name": "tag-id",
+              "type": "integer",
+              "required": true,
+              "repeatable": false,
+              "description": "`tag-id*` integer"
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`name`"
+            },
+            {
+              "name": "colour",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`colour`"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "gateway",
+          "returnSummary": "tag-set result。",
+          "example": {
+            "command": "cli.invoke --cli ug-filemgr --action tag-set -- --tag-id 1 --name \"重要\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    },
+    {
+      "name": "file-workflow",
+      "domain": "file",
+      "description": "fileOrganize、。",
+      "agent": "file-agent",
+      "actions": [
+        {
+          "name": "get-user-dir",
+          "description": "file-workflow  get-user-dir operation。",
+          "parameters": [],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "`fileId`、realdirectory `path`",
+          "example": {
+            "command": "cli.invoke --cli file-workflow --action get-user-dir",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "start",
+          "description": "file-workflow  start operation。",
+          "parameters": [
+            {
+              "name": "kind",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`kind*`=`organize|deduplication`",
+              "enum": [
+                "organize",
+                "deduplication"
+              ]
+            },
+            {
+              "name": "lang",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`lang`"
+            },
+            {
+              "name": "target",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`target*`"
+            },
+            {
+              "name": "destination",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`destination`"
+            },
+            {
+              "name": "by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`by`=`type|btime|ctime|mtime|size|image_resolution|audio_duration|video_duration|video_resolution`",
+              "enum": [
+                "type",
+                "btime",
+                "ctime",
+                "mtime",
+                "size",
+                "image_resolution",
+                "audio_duration",
+                "video_duration",
+                "video_resolution"
+              ]
+            },
+            {
+              "name": "filter",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`filter`"
+            },
+            {
+              "name": "type-rule",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`type-rule`"
+            },
+            {
+              "name": "scope",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`scope`=`all|documents|images|videos|audio`",
+              "enum": [
+                "all",
+                "documents",
+                "images",
+                "videos",
+                "audio"
+              ]
+            },
+            {
+              "name": "keep-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keep-by`=`latest|oldest`。",
+              "enum": [
+                "latest",
+                "oldest"
+              ]
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "`id`、`status=planned`、`plan`",
+          "example": {
+            "command": "cli.invoke --cli file-workflow --action start -- --kind organize --target \"/nas/docs\" --lang \"中文\" --by type",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "run",
+          "description": "file-workflow  run operation。",
+          "parameters": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`id*` string，Must `start.data.id`。"
+            },
+            {
+              "name": "start.data.id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`id*` string，Must `start.data.id`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "`id`、`status`、`total`、`succeeded`、`failed`",
+          "example": {
+            "command": "cli.invoke --cli file-workflow --action run -- --id \"<start.data.id>\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "batch-del",
+          "description": "file-workflow  batch-del operation。",
+          "parameters": [
+            {
+              "name": "paths",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`paths*` string，content JSON 。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "`status`、`total`、`succeeded`、`failed`",
+          "example": {
+            "command": "cli.invoke --cli file-workflow --action batch-del -- --paths '[\"file:1\",\"file:2\"]'",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "batch-move",
+          "description": "file-workflow  batch-move operation。",
+          "parameters": [
+            {
+              "name": "data",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`data` JSON"
+            },
+            {
+              "name": "actionType",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`actionType`"
+            },
+            {
+              "name": "root",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`root`"
+            },
+            {
+              "name": "renameBy",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`renameBy`"
+            },
+            {
+              "name": "dateField",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`dateField`=`atime|btime|ctime|mtime`",
+              "enum": [
+                "atime",
+                "btime",
+                "ctime",
+                "mtime"
+              ]
+            },
+            {
+              "name": "sourceDir",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`sourceDir`"
+            },
+            {
+              "name": "destination",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`destination`。。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "`status`、`total`、`succeeded`、`failed`、`renamedFiles`、`hasMore`",
+          "example": {
+            "command": "cli.invoke --cli file-workflow --action batch-move -- --root \"current\" --renameBy \"date-prefix\" --dateField \"mtime\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    },
+    {
+      "name": "ug-document",
+      "domain": "document",
+      "description": "Read、、、TranslateDocuments。",
+      "agent": "document-agent",
+      "actions": [
+        {
+          "name": "page-count",
+          "description": "ug-document  page-count operation。",
+          "parameters": [
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "`items[].file`、`items[].page_count`",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action page-count -- --file \"/nas/a.pdf\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "metadata",
+          "description": "ug-document  metadata operation。",
+          "parameters": [
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            },
+            {
+              "name": "include-pages",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`include-pages` boolean， true",
+              "default": true
+            },
+            {
+              "name": "directory-limit",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`directory-limit`>=1， 200。",
+              "minimum": 1,
+              "default": 200
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "file/directorydata、",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action metadata -- --file \"/nas/a.pdf\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "qa",
+          "description": "ug-document  qa operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`query*`"
+            },
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            },
+            {
+              "name": "intent",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`intent`=`qa|content_read|extraction|period|condition|comparison|summary|outline|semantic_lookup|locate_content`",
+              "enum": [
+                "qa",
+                "content_read",
+                "extraction",
+                "period",
+                "condition",
+                "comparison",
+                "summary",
+                "outline",
+                "semantic_lookup",
+                "locate_content"
+              ]
+            },
+            {
+              "name": "content-scope",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content-scope`=`auto|preview|full`， `auto`",
+              "enum": [
+                "auto",
+                "preview",
+                "full"
+              ],
+              "default": "auto"
+            },
+            {
+              "name": "top-k",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`top-k` 1..20",
+              "minimum": 1,
+              "maximum": 20
+            },
+            {
+              "name": "entities",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`entities`"
+            },
+            {
+              "name": "answer-mode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`answer-mode`=`direct|list|table|prose`",
+              "enum": [
+                "direct",
+                "list",
+                "table",
+                "prose"
+              ]
+            },
+            {
+              "name": "evidence-mode",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`evidence-mode`=`balanced|focused|broad`",
+              "enum": [
+                "balanced",
+                "focused",
+                "broad"
+              ]
+            },
+            {
+              "name": "max-files",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-files` 1..200， 60",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 60
+            },
+            {
+              "name": "body-cap",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`body-cap`>=1000。",
+              "minimum": 1000
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "`answer`、/evidence、coverage、Read",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action qa -- --query \"合同的付款日期是什么？\" --file \"/nas/contract.pdf\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "extract",
+          "description": "ug-document  extract operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`query*`"
+            },
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            },
+            {
+              "name": "schema",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`schema`=`auto|invoice|contract|expense|receipt|medical-report|purchase_order|mixed|mixed_reconciliation`， `auto`",
+              "enum": [
+                "auto",
+                "invoice",
+                "contract",
+                "expense",
+                "receipt",
+                "medical-report",
+                "purchase_order",
+                "mixed",
+                "mixed_reconciliation"
+              ],
+              "default": "auto"
+            },
+            {
+              "name": "content-scope",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content-scope`=`auto|preview|full`",
+              "enum": [
+                "auto",
+                "preview",
+                "full"
+              ]
+            },
+            {
+              "name": "max-files",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-files` 1..500， 60",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 60
+            },
+            {
+              "name": "body-cap",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`body-cap`>=1000",
+              "minimum": 1000
+            },
+            {
+              "name": "dedupe",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`dedupe` boolean， true。",
+              "default": true
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "data、、coverage、failures",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action extract -- --query \"抽取发票信息\" --file \"/nas/invoice.pdf\" --schema invoice",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "translate",
+          "description": "ug-document  translate operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query`"
+            },
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            },
+            {
+              "name": "target-lang",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`target-lang`"
+            },
+            {
+              "name": "style",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`style`"
+            },
+            {
+              "name": "body-cap",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`body-cap`>=1000",
+              "minimum": 1000
+            },
+            {
+              "name": "max-files",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-files` 1..50， 5",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 5
+            },
+            {
+              "name": "extract-only",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`extract-only` boolean， false",
+              "default": false
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content`"
+            },
+            {
+              "name": "source-title",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`source-title`。"
+            }
+          ],
+          "effect": "mixed",
+          "approval": "gateway",
+          "returnSummary": "`mode`、`translation`、`output_file`、`target_lang`、coverage、sources、safety",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action translate -- --query \"翻译成英文\" --file \"/nas/a.docx\" --target-lang en",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "writing",
+          "description": "ug-document  writing operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query`"
+            },
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            },
+            {
+              "name": "task",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`task`=`outline|polish|rewrite|expand|compress|draft|minutes`",
+              "enum": [
+                "outline",
+                "polish",
+                "rewrite",
+                "expand",
+                "compress",
+                "draft",
+                "minutes"
+              ]
+            },
+            {
+              "name": "style",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`style`=`professional|formal|concise|friendly`",
+              "enum": [
+                "professional",
+                "formal",
+                "concise",
+                "friendly"
+              ]
+            },
+            {
+              "name": "template",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`template`=`management-summary`"
+            },
+            {
+              "name": "content-scope",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content-scope`=`auto|preview|full`",
+              "enum": [
+                "auto",
+                "preview",
+                "full"
+              ]
+            },
+            {
+              "name": "max-length",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-length`>=1",
+              "minimum": 1
+            },
+            {
+              "name": "body-cap",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`body-cap`>=1000",
+              "minimum": 1000
+            },
+            {
+              "name": "max-files",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-files` 1..200， 60",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 60
+            },
+            {
+              "name": "extract-only",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`extract-only` boolean"
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content`"
+            },
+            {
+              "name": "source-title",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`source-title`。"
+            }
+          ],
+          "effect": "mixed",
+          "approval": "gateway",
+          "returnSummary": "`mode`、`draft`、`output_file`、`task`、`processing_mode`、coverage、sources、safety",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action writing -- --query \"整理会议纪要\" --file \"/nas/meeting.docx\" --task minutes",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "reconcile",
+          "description": "ug-document  reconcile operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query`"
+            },
+            {
+              "name": "file",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file`"
+            },
+            {
+              "name": "max-files",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-files` 1..200， 60。",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 60
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "result、、 coverage",
+          "example": {
+            "command": "cli.invoke --cli ug-document --action reconcile -- --query \"核对合同和发票金额\" --file \"/nas/contract.pdf\" --file \"/nas/invoice.pdf\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        }
+      ]
+    },
+    {
+      "name": "ug-knowledge",
+      "domain": "knowledge",
+      "description": "Knowledge、evidence、audioSave。",
+      "agent": "knowledge-agent",
+      "actions": [
+        {
+          "name": "answer-official",
+          "description": "ug-knowledge  answer-official operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`query*`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Knowledge",
+          "example": {
+            "command": "cli.invoke --cli ug-knowledge --action answer-official -- --query \"NAS 如何开启文件共享？\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "audio-transcription",
+          "description": "ug-knowledge  audio-transcription operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`path`"
+            },
+            {
+              "name": "language",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`language`"
+            },
+            {
+              "name": "speak-count",
+              "type": "integer",
+              "required": false,
+              "repeatable": false,
+              "description": "`speak-count` integer>=1。 `path`。",
+              "minimum": 1
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "`items[].transcriptText`、`transcriptRef`、`segments`、`sourceKind`、`sourcePath`、coverage、summary、failures、quality、warnings",
+          "example": {
+            "command": "cli.invoke --cli ug-knowledge --action audio-transcription -- --path \"/nas/audio/meeting.m4a\" --language zh",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "collect-evidence",
+          "description": "ug-knowledge  collect-evidence operation。",
+          "parameters": [
+            {
+              "name": "query",
+              "type": "string",
+              "required": true,
+              "repeatable": false,
+              "description": "`query*`"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`path`"
+            },
+            {
+              "name": "extension",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`extension`"
+            },
+            {
+              "name": "full",
+              "type": "boolean",
+              "required": false,
+              "repeatable": false,
+              "description": "`full` boolean。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "`evidence`、sources、coverage、failures/warnings",
+          "example": {
+            "command": "cli.invoke --cli ug-knowledge --action collect-evidence -- --query \"总结项目风险\" --path \"/nas/project\" --extension pdf --full",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "save-text",
+          "description": "ug-knowledge  save-text operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`path`"
+            },
+            {
+              "name": "content",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content`"
+            },
+            {
+              "name": "content-ref",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`content-ref`"
+            },
+            {
+              "name": "filename-hint",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`filename-hint`。 `content`  `content-ref`"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "real `verified=true`、`outputFile`、`contentBytes`",
+          "example": {
+            "command": "cli.invoke --cli ug-knowledge --action save-text -- --path \"/nas/notes\" --content \"# 会议纪要\" --filename-hint \"会议纪要\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    },
+    {
+      "name": "ug-photo",
+      "domain": "album",
+      "description": "photosAlbumCreate、OrganizeAlbum。",
+      "agent": "photo-agent",
+      "actions": [
+        {
+          "name": "albums",
+          "description": "ug-photo  albums operation。",
+          "parameters": [
+            {
+              "name": "keyword",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keyword`"
+            },
+            {
+              "name": "album-select",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-select`=`all|my|shared`",
+              "enum": [
+                "all",
+                "my",
+                "shared"
+              ]
+            },
+            {
+              "name": "album-perm",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-perm`"
+            },
+            {
+              "name": "album-type",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-type`=`regular|condition|baby|folder|face|location|pet|object|custom|city`",
+              "enum": [
+                "regular",
+                "condition",
+                "baby",
+                "folder",
+                "face",
+                "location",
+                "pet",
+                "object",
+                "custom",
+                "city"
+              ]
+            },
+            {
+              "name": "share-select",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`share-select`=`private|shared-by-me|shared-with-me`",
+              "enum": [
+                "private",
+                "shared-by-me",
+                "shared-with-me"
+              ]
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`>=1",
+              "minimum": 1
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page-size`<=1000",
+              "maximum": 1000
+            },
+            {
+              "name": "sort-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`sort-by`=`photo-count|upload-time|name|create-time`",
+              "enum": [
+                "photo-count",
+                "upload-time",
+                "name",
+                "create-time"
+              ]
+            },
+            {
+              "name": "asc",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`asc`"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Album、real `album_uuid`、photos",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action albums -- --keyword \"旅行\" --album-select all",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "album-detail",
+          "description": "ug-photo  album-detail operation。",
+          "parameters": [
+            {
+              "name": "album-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-uuid`"
+            },
+            {
+              "name": "get-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`get-type`=`basic|full|figure-list`",
+              "enum": [
+                "basic",
+                "full",
+                "figure-list"
+              ]
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`raw`。RequiresrealAlbum。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Albumpeople",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action album-detail -- --album-uuid \"album_uuid\" --get-type full",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "figure-albums",
+          "description": "ug-photo  figure-albums operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`、`album-uuid`"
+            },
+            {
+              "name": "album-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`、`album-uuid`"
+            },
+            {
+              "name": "show-hidden",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`show-hidden`"
+            },
+            {
+              "name": "show-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`show-name`=`all|named|unnamed`",
+              "enum": [
+                "all",
+                "named",
+                "unnamed"
+              ]
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "sort-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "asc",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "people/Album UUID",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action figure-albums -- --show-name named --page 1",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "object-albums",
+          "description": "ug-photo  object-albums operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`、`album-uuid`"
+            },
+            {
+              "name": "album-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`、`album-uuid`"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "sort-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "asc",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Album UUID",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action object-albums -- --album-name \"宠物\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "search-picture",
+          "description": "ug-photo  search-picture operation。",
+          "parameters": [
+            {
+              "name": "album-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "album-type",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "figure-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "figure-name",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "pet-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "pet-name",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`album-uuid`、`album-name`、`album-type`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "figure-pet-method",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`figure-pet-method`=`or|and`",
+              "enum": [
+                "or",
+                "and"
+              ]
+            },
+            {
+              "name": "ai-object-index",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ai-object-uuid",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ai-object-name",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "location",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "dir",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "file-name-contains",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ocr-contains",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`location` object、`dir`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "start-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`"
+            },
+            {
+              "name": "end-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`"
+            },
+            {
+              "name": "total-judge",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`total-judge`"
+            },
+            {
+              "name": "file-type",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "range-personal",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`range-personal`、`range-share`"
+            },
+            {
+              "name": "range-share",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`range-personal`、`range-share`"
+            },
+            {
+              "name": "camera-model",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "lens-model",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "focal",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "exposure",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "aperture",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "iso",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "sort-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "asc",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "photos/、fileidentity",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action search-picture -- --figure-name \"小明\" --start-time \"2026-01-01\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "search-screen",
+          "description": "ug-photo  search-screen operation。",
+          "parameters": [
+            {
+              "name": "category",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`category`=`screen|figure|pet|scene|card|ocr|location|folder|file|album|car-animal|screen-custom|custom`",
+              "enum": [
+                "screen",
+                "figure",
+                "pet",
+                "scene",
+                "card",
+                "ocr",
+                "location",
+                "folder",
+                "file",
+                "album",
+                "car-animal",
+                "screen-custom",
+                "custom"
+              ]
+            },
+            {
+              "name": "keyword",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keyword`"
+            },
+            {
+              "name": "album-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-type`、`album-uuid`、`figure-uuid`、`pet-uuid`"
+            },
+            {
+              "name": "album-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-type`、`album-uuid`、`figure-uuid`、`pet-uuid`"
+            },
+            {
+              "name": "figure-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-type`、`album-uuid`、`figure-uuid`、`pet-uuid`"
+            },
+            {
+              "name": "pet-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-type`、`album-uuid`、`figure-uuid`、`pet-uuid`"
+            },
+            {
+              "name": "storage-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`storage-type`=`personal|shared|personal-shared|all`",
+              "enum": [
+                "personal",
+                "shared",
+                "personal-shared",
+                "all"
+              ]
+            },
+            {
+              "name": "common-album-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`common-album-type`=`system|custom|offline`",
+              "enum": [
+                "system",
+                "custom",
+                "offline"
+              ]
+            },
+            {
+              "name": "index-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`index-id`、`class-index`"
+            },
+            {
+              "name": "class-index",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`index-id`、`class-index`"
+            },
+            {
+              "name": "range-personal",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`range-personal`、`range-share`"
+            },
+            {
+              "name": "range-share",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`range-personal`、`range-share`"
+            },
+            {
+              "name": "location-level",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`location-level`=`country|province|city|district|street|town|address`",
+              "enum": [
+                "country",
+                "province",
+                "city",
+                "district",
+                "street",
+                "town",
+                "address"
+              ]
+            },
+            {
+              "name": "folder-id",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`folder-id`、`path`"
+            },
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`folder-id`、`path`"
+            },
+            {
+              "name": "file-type",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "camera-model",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "lens-model",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "focal",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "exposure",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "aperture",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "iso",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`total-judge`、`raw`。"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`total-judge`、`raw`。"
+            },
+            {
+              "name": "sort-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`total-judge`、`raw`。"
+            },
+            {
+              "name": "asc",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`total-judge`、`raw`。"
+            },
+            {
+              "name": "total-judge",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`total-judge`、`raw`。"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`sort-by`、`asc`、`total-judge`、`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Search、 UUID/ID",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action search-screen -- --category scene --keyword \"雪景\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "search-classify",
+          "description": "ug-photo  search-classify operation。",
+          "parameters": [
+            {
+              "name": "keyword",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keyword`"
+            },
+            {
+              "name": "category",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`category`=`figure-pet|file-image-recognition`",
+              "enum": [
+                "figure-pet",
+                "file-image-recognition"
+              ]
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`raw`。"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`raw`。"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`、`page-size`、`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "people/",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action search-classify -- --keyword \"团团\" --category figure-pet",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "search-hint",
+          "description": "ug-photo  search-hint operation。",
+          "parameters": [
+            {
+              "name": "keyword",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`keyword`"
+            },
+            {
+              "name": "cover-total",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`cover-total`>=0",
+              "minimum": 0
+            },
+            {
+              "name": "record",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`record`"
+            },
+            {
+              "name": "page",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page`"
+            },
+            {
+              "name": "page-size",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`page-size`"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "Search/",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action search-hint -- --keyword \"深圳\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "meta",
+          "description": "ug-photo  meta operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`path`"
+            },
+            {
+              "name": "raw",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`raw`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "EXIF/data、failure/",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action meta -- --path \"/nas/photo.jpg\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "vision-ocr",
+          "description": "ug-photo  vision-ocr operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`path`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "OCR text AI",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action vision-ocr -- --path \"/nas/photo.jpg\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "vision-vlm",
+          "description": "ug-photo  vision-vlm operation。",
+          "parameters": [
+            {
+              "name": "path",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`path`"
+            },
+            {
+              "name": "prompt",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`prompt`"
+            },
+            {
+              "name": "model",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`model`"
+            },
+            {
+              "name": "max-tokens",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`max-tokens`"
+            },
+            {
+              "name": "temperature",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`temperature`"
+            },
+            {
+              "name": "top-p",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`top-p`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "result",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action vision-vlm -- --path \"/nas/photo.jpg\" --prompt \"图片里有什么？\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "health",
+          "description": "ug-photo  health operation。",
+          "parameters": [
+            {
+              "name": "domain",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`domain`。"
+            }
+          ],
+          "effect": "read",
+          "approval": "none",
+          "returnSummary": "photos CLI",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action health -- --domain photo",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data realresult。"
+        },
+        {
+          "name": "create-album",
+          "description": "ug-photo  create-album operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`"
+            },
+            {
+              "name": "add-item",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`add-item`"
+            },
+            {
+              "name": "sub-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`sub-type`=`default|temporary`",
+              "enum": [
+                "default",
+                "temporary"
+              ]
+            },
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "real `album_uuid` scene；/ blocked",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action create-album -- --album-name \"宠物相册\" --query \"去年国庆的猫\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "create-album-condition",
+          "description": "ug-photo  create-album-condition operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`"
+            },
+            {
+              "name": "file-type",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "location",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "dir",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "figure-uuid",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "figure-name",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "pet-uuid",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "pet-name",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "camera-model",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "lens-model",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "focal",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "exposure",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "aperture",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "iso",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "file-name-contains",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "ocr-contains",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`file-type`=`image|video|folder|oexe`、`location` object、`dir`、`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`、`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-name-contains`、`ocr-contains`",
+              "enum": [
+                "image",
+                "video",
+                "folder",
+                "oexe"
+              ]
+            },
+            {
+              "name": "start-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`。"
+            },
+            {
+              "name": "end-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "Albumreal UUID",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action create-album-condition -- --album-name \"旅行照片\" --camera-model \"X-T5\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "create-album-anniversary",
+          "description": "ug-photo  create-album-anniversary operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`"
+            },
+            {
+              "name": "commemorate-method",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`commemorate-method`=`year|month`",
+              "enum": [
+                "year",
+                "month"
+              ]
+            },
+            {
+              "name": "commemorate-month",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`commemorate-month` 1..12",
+              "minimum": 1,
+              "maximum": 12
+            },
+            {
+              "name": "commemorate-day",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`commemorate-day`"
+            },
+            {
+              "name": "commemorate-range",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`commemorate-range`"
+            },
+            {
+              "name": "start-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`。"
+            },
+            {
+              "name": "end-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "Albumreal UUID",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action create-album-anniversary -- --album-name \"结婚纪念日\" --commemorate-method year --commemorate-month 5 --commemorate-day 20",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "create-album-baby",
+          "description": "ug-photo  create-album-baby operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`"
+            },
+            {
+              "name": "add-item",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`add-item`"
+            },
+            {
+              "name": "baby-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`baby-name`、`person-name`、`gender`、`birthday`"
+            },
+            {
+              "name": "person-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`baby-name`、`person-name`、`gender`、`birthday`"
+            },
+            {
+              "name": "gender",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`baby-name`、`person-name`、`gender`、`birthday`"
+            },
+            {
+              "name": "birthday",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`baby-name`、`person-name`、`gender`、`birthday`"
+            },
+            {
+              "name": "blood-type",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`blood-type`=`unset|A|B|O|AB|other`",
+              "enum": [
+                "unset",
+                "A",
+                "B",
+                "O",
+                "AB",
+                "other"
+              ]
+            },
+            {
+              "name": "height",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`height`、`weight`"
+            },
+            {
+              "name": "weight",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`height`、`weight`"
+            },
+            {
+              "name": "figure-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`figure-uuid`"
+            },
+            {
+              "name": "query",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`query`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "Albumreal UUID people",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action create-album-baby -- --baby-name \"豆豆\" --person-name \"豆豆\" --birthday \"2021.12.1\" --gender \"男\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "create-album-custom",
+          "description": "ug-photo  create-album-custom operation。",
+          "parameters": [
+            {
+              "name": "album-name",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`album-name`。"
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "Albumreal UUID",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action create-album-custom -- --album-name \"露营\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        },
+        {
+          "name": "timeline",
+          "description": "ug-photo  timeline operation。",
+          "parameters": [
+            {
+              "name": "figure-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "figure-name",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "pet-uuid",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "pet-name",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`figure-uuid`、`figure-name`、`pet-uuid`、`pet-name`"
+            },
+            {
+              "name": "figure-pet-method",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`figure-pet-method`=`or|and`",
+              "enum": [
+                "or",
+                "and"
+              ]
+            },
+            {
+              "name": "location",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "dir",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "album-uuid",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "album-name",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "album-type",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ai-object-index",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ai-object-uuid",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ai-object-name",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "file-name-contains",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "ocr-contains",
+              "type": "object",
+              "required": false,
+              "repeatable": true,
+              "description": "`location`、`dir`、`album-uuid`、`album-name`、`album-type`、`ai-object-index`、`ai-object-uuid`、`ai-object-name`、`file-name-contains`、`ocr-contains`"
+            },
+            {
+              "name": "start-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`"
+            },
+            {
+              "name": "end-time",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`start-time`、`end-time`"
+            },
+            {
+              "name": "camera-model",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "lens-model",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "focal",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "exposure",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "aperture",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "iso",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "file-type",
+              "type": "string",
+              "required": false,
+              "repeatable": true,
+              "description": "`camera-model`、`lens-model`、`focal`、`exposure`、`aperture`、`iso`、`file-type`=`all|image|video|gif|live`",
+              "enum": [
+                "all",
+                "image",
+                "video",
+                "gif",
+                "live"
+              ]
+            },
+            {
+              "name": "group-by",
+              "type": "string",
+              "required": false,
+              "repeatable": false,
+              "description": "`group-by`=`month|year`。",
+              "enum": [
+                "month",
+                "year"
+              ]
+            }
+          ],
+          "effect": "state-change",
+          "approval": "workflow",
+          "returnSummary": "`status=completed|submitted|partial|blocked`、、directory ID、/failure",
+          "example": {
+            "command": "cli.invoke --cli ug-photo --action timeline -- --group-by month --start-time \"2026-01-01\" --end-time \"2026-12-31\"",
+            "outputStatus": "unknown"
+          },
+          "permissions": {
+            "knowledgeStatus": "unknown"
+          },
+          "prerequisites": {
+            "knowledgeStatus": "unknown"
+          },
+          "errorCodes": {
+            "knowledgeStatus": "unknown"
+          },
+          "stability": "unknown",
+          "completionEvidence": "result ok=true， data operation；Approval、failure。"
+        }
+      ]
+    }
+  ]
+}

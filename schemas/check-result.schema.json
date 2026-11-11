@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uliya.local/schemas/check-result.schema.json",
+  "title": "Uliya Skill Check Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "checkFormatVersion",
+    "status",
+    "target",
+    "catalog",
+    "files",
+    "summary",
+    "diagnostics"
+  ],
+  "properties": {
+    "checkFormatVersion": { "const": "2.0.0" },
+    "status": {
+      "enum": [
+        "not-uploadable",
+        "static-pass-needs-target-validation",
+        "static-pass"
+      ]
+    },
+    "target": { "$ref": "#/$defs/target" },
+    "catalog": { "$ref": "#/$defs/catalog" },
+    "files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/file" }
+    },
+    "summary": { "$ref": "#/$defs/summary" },
+    "diagnostics": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/diagnostic" }
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "skillName": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        }
+      }
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkedVersion"],
+      "properties": {
+        "checkedVersion": { "$ref": "#/$defs/semver" }
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?:SKILL\\.md|references\/(?!.*(?:^|\/)\\.\\.?(?:\/|$))[A-Za-z0-9._/-]+\\.md)$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["errors", "warnings", "info"],
+      "properties": {
+        "errors": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "info": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity", "message", "suggestion"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "severity": {
+          "enum": ["error", "warning", "info"]
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$)).+$"
+        },
+        "line": { "type": "integer", "minimum": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "message": { "type": "string", "minLength": 1 },
+        "suggestion": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
